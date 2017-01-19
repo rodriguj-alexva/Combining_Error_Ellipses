@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 class Ellipse_Type(object):
 	'''
@@ -47,8 +48,8 @@ class Convolve(object):
 		sigy2 = np.square(e.sigma_major)
 		sigx2 = np.square(e.sigma_minor)
 		
-		c = np.cos(e.theta)
-		s = np.sin(e.theta)
+		c = np.cos(math.radians(e.theta))
+		s = np.sin(math.radians(e.theta))
 		c2 = c*c
 		s2 = s*s
 		
@@ -71,7 +72,7 @@ class Convolve(object):
 		x = x0
 		y = y0
 		
-		theta = 0.5*np.arctan2(rho2_sxsy, diff)
+		theta = math.degrees(0.5*np.arctan2(rho2_sxsy, diff))
 		diff = np.hypot(diff, rho2_sxsy)
 		smajor = np.sqrt(0.5*(sum + diff))
 		sminor = np.sqrt(0.5*(sum - diff))
@@ -141,7 +142,14 @@ class Convolve(object):
 		'''
 	
 	def test(self):
-		d = [(30,71.6,50,24,18),(29.2,71.7,23,16,27),(30.3,72.3,47,5,-56)]
+#		d = [(30,71.6,50,24,18),(29.2,71.7,23,16,20),(30.3,72.3,47,5,20)]
+		d = [(30,71.6,50,24,18),(29.2,71.7,23,16,20)]
 		print "data file = {}".format(d)
 		e = self.convolve(d)
 		print "Convolved output: {0}".format(e)
+
+if __name__ == "__main__":
+	import sys
+	c = Convolve()
+	c.info()
+	c.test()
